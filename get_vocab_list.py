@@ -1,9 +1,27 @@
 import random
+from docx import Document
+
 SOURCE_PATH = './vocab.txt'
 PREVIEW_PATH = './clean_vocab.txt'
 QUIZ_PATH = './quiz_vocab.txt'
 PRIVIEW_NUM = 20
 QUIZ_NUM = 6
+
+
+def get_all_bold_vocab(file_1, file_2):
+    all_bold_vocab = []
+
+    for para in file_1.paragraphs:
+        for run in para.runs:
+            if run.bold:
+                all_bold_vocab.append(run.text)
+
+    for para in file_2.paragraphs:
+        for run in para.runs:
+            if run.bold:
+                all_bold_vocab.append(run.text)
+
+    return all_bold_vocab
 
 
 def read_source_vocab_list(source_path):
@@ -23,18 +41,3 @@ def clean_list(vocab_list):
 def select_words(clean_vocab_list, num):
     select_vocab_list = random.sample(clean_vocab_list, k=num)
     return select_vocab_list
-
-
-def write_select_vocab_list_to_file(select_vocab_list, target_path):
-    with open(target_path, 'w') as file:
-        for vocab in select_vocab_list:
-            file.writelines(vocab)
-
-
-vocab_list = read_source_vocab_list(SOURCE_PATH)
-clean_vocab_list = clean_list(vocab_list)
-select_vocab_list = select_words(clean_vocab_list, PRIVIEW_NUM)
-write_select_vocab_list_to_file(select_vocab_list, PREVIEW_PATH)
-
-quiz_vocab_list = select_words(select_vocab_list, QUIZ_NUM)
-write_select_vocab_list_to_file(quiz_vocab_list, QUIZ_PATH)
