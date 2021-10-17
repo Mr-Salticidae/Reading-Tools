@@ -7,16 +7,12 @@ SENTENCE_NUM = 5
 RESULT_FILE_NAME = 'reading.docx'
 
 
-def get_all_text(file_1, file_2):
+def get_all_text(document_list):
     all_text = []
-
-    for para in file_1.paragraphs:
-        for run in para.runs:
-            all_text.append(run.text)
-
-    for para in file_2.paragraphs:
-        for run in para.runs:
-            all_text.append(run.text)
+    for document in document_list:
+        for para in document.paragraphs:
+            for run in para.runs:
+                all_text.append(run.text)
     return all_text
 
 

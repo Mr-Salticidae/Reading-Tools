@@ -8,19 +8,14 @@ PRIVIEW_NUM = 20
 QUIZ_NUM = 6
 
 
-def get_all_bold_vocab(file_1, file_2):
+def get_all_bold_vocab(document_list):
     all_bold_vocab = []
 
-    for para in file_1.paragraphs:
-        for run in para.runs:
-            if run.bold:
-                all_bold_vocab.append(run.text)
-
-    for para in file_2.paragraphs:
-        for run in para.runs:
-            if run.bold:
-                all_bold_vocab.append(run.text)
-
+    for document in document_list:
+        for para in document.paragraphs:
+            for run in para.runs:
+                if run.bold:
+                    all_bold_vocab.append(run.text)
     return all_bold_vocab
 
 
