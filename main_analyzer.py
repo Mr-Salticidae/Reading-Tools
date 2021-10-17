@@ -1,6 +1,7 @@
 import get_vocab_list
 import get_long_sentences
 from docx import Document
+from docx.oxml.ns import qn
 import os
 
 SOURCES_FOLDER_PATH = './sources'
@@ -30,25 +31,47 @@ def read_document(file_list):
     return document_list
 
 
-def generate_preview(select_vocab_list, results_folder_path, preview_file_name):
+def generate_preview(select_vocab_list, results_folder_path, preview_file_name, title_font=u'仿宋', body_font=u'仿宋'):
     preview = Document()
-    preview.add_heading("课前预习")
+
+    run = preview.add_heading('', level=1).add_run(u'课前预习')
+    run.font.name = title_font
+    run._element.rPr.rFonts.set(qn('w:eastAsia'), title_font)
+
+    preview.styles['Normal'].font.name = body_font
+    preview.styles['Normal']._element.rPr.rFonts.set(
+        qn('w:eastAsia'), body_font)
+
     for word in select_vocab_list:
         preview.add_paragraph(word)
     preview.save(os.path.join(results_folder_path, preview_file_name))
 
 
-def generate_quiz(quiz_vocab_list, longest_sentences, results_folder_path, quiz_file_name):
+def generate_quiz(quiz_vocab_list, longest_sentences, results_folder_path, quiz_file_name, title_font=u'仿宋', body_font=u'仿宋'):
     quiz = Document()
-    quiz.add_heading("单词")
+
+    quiz.styles['Normal'].font.name = body_font
+    quiz.styles['Normal']._element.rPr.rFonts.set(qn('w:eastAsia'), body_font)
+
+    run = quiz.add_heading('', level=1).add_run(u'课首小测')
+    run.font.name = title_font
+    run._element.rPr.rFonts.set(qn('w:eastAsia'), title_font)
+
+    run = quiz.add_heading('', level=2).add_run(u'单词')
+    run.font.name = title_font
+    run._element.rPr.rFonts.set(qn('w:eastAsia'), title_font)
     for word in quiz_vocab_list:
         quiz.add_paragraph(word)
 
-    quiz.add_heading("长难句")
+    run = quiz.add_heading('', level=2).add_run(u'长难句')
+    run.font.name = title_font
+    run._element.rPr.rFonts.set(qn('w:eastAsia'), title_font)
     for sentence in longest_sentences:
         quiz.add_paragraph(sentence)
 
-    quiz.add_heading("同义转换")
+    run = quiz.add_heading('', level=2).add_run(u'同义转换')
+    run.font.name = title_font
+    run._element.rPr.rFonts.set(qn('w:eastAsia'), title_font)
 
     quiz.save(os.path.join(results_folder_path, quiz_file_name))
 

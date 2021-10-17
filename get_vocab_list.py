@@ -28,7 +28,7 @@ def read_source_vocab_list(source_path):
 def clean_list(vocab_list):
     clean_list = []
     for vocab in vocab_list:
-        vocab = vocab.lower()
+        vocab = vocab.lower().strip()
         clean_list.append(vocab)
     return list(set(clean_list))
 
