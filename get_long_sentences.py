@@ -1,10 +1,6 @@
-from docx import Document
 import random
 
-FILE_PATH_1 = './test1.docx'
-FILE_PATH_2 = './test2.docx'
-SENTENCE_NUM = 5
-RESULT_FILE_NAME = 'reading.docx'
+# Read all text from documents
 
 
 def get_all_text(document_list):
@@ -14,6 +10,8 @@ def get_all_text(document_list):
             for run in para.runs:
                 all_text.append(run.text)
     return all_text
+
+# Split text by period
 
 
 def split_text_to_sentences(all_text):
@@ -28,14 +26,9 @@ def split_text_to_sentences(all_text):
                 all_sentences.append(sentence)
     return all_sentences
 
+# Select some long sentences
+
 
 def select_longest_sentences(all_sentences, sentence_num):
     sort_list = sorted(all_sentences, key=len, reverse=True)[:5]
     return random.sample(sort_list, k=sentence_num)
-
-
-def write_sentences_to_file(longest_sentences, file_name):
-    result = Document()
-    for sentence in longest_sentences:
-        result.add_paragraph(sentence)
-    result.save(file_name)

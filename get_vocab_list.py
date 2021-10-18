@@ -1,11 +1,6 @@
 import random
-from docx import Document
 
-SOURCE_PATH = './vocab.txt'
-PREVIEW_PATH = './clean_vocab.txt'
-QUIZ_PATH = './quiz_vocab.txt'
-PRIVIEW_NUM = 20
-QUIZ_NUM = 6
+# Get bold text from documents
 
 
 def get_all_bold_vocab(document_list):
@@ -18,11 +13,7 @@ def get_all_bold_vocab(document_list):
                     all_bold_vocab.append(run.text)
     return all_bold_vocab
 
-
-def read_source_vocab_list(source_path):
-    with open(source_path, 'r') as file:
-        data = file.readlines()
-        return data
+# Make vocab list clean
 
 
 def clean_list(vocab_list):
@@ -31,6 +22,8 @@ def clean_list(vocab_list):
         vocab = vocab.lower().strip()
         clean_list.append(vocab)
     return list(set(clean_list))
+
+# Select some words from vocab list
 
 
 def select_words(clean_vocab_list, num):
