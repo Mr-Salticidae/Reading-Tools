@@ -19,11 +19,24 @@ def get_all_files(sources_folder_path):
 
 
 def read_all_files(file_list):
-    files = []
+    dataset = []
     for file in file_list:
-        files.append(docx2txt.process(file))
-    return files
+        dataset.append(docx2txt.process(file))
+    return dataset
+
+# Clean the dataset
+
+
+def clean_dataset(dataset):
+    corpus = []
+    for article in dataset:
+        article = article.replace(u'\xa0', u' ')
+        article = article.replace(u'\n', u' ')
+        article = article.split(r"\n|[' ']")
+        corpus.append(article[0])
+    return corpus
 
 
 file_list = get_all_files(SOURCES_FOLDER_PATH)
-files = read_all_files(file_list)
+dataset = read_all_files(file_list)
+corpus = clean_dataset(dataset)
